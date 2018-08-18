@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   }
 
   login() {
-    console.log('Trying to log in with credentials ' + this.credentials)
+    console.log('Trying to log in with credentials ' + this.credentials.username + ' ' + this.credentials.password)
     this.authService.authenticate(this.credentials, {})
   }
 }
