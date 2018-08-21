@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { HttpClient } from '@angular/common/http';
+import { UserDetails } from './user-details.model';
 
 @Component({
   selector: 'app-user-details',
@@ -8,13 +10,13 @@ import { DataService } from '../data.service';
 })
 export class UserDetailsComponent implements OnInit {
 
-  posts$: Object
+  user$: Object;
 
-  constructor(private data: DataService) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.data.getPosts().subscribe(
-      data => this.posts$ = data 
-    );
+    this.http.get("api/user").subscribe (
+      data => this.user$ = data
+    )
   }
 }

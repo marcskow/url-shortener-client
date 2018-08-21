@@ -1,4 +1,4 @@
-<form (ngSubmit)="login()">
+<form [hidden]="authenticated()" (ngSubmit)="login()">
     <div class="form-group">
         <label for="username">Username</label>
         <i class="fa fa-key"></i>

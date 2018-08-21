@@ -5,6 +5,7 @@ import { DetailsComponent } from './details/details.component';
 import { PostsComponent } from './posts/posts.component';
 import { HomeComponent } from './home/home.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -13,20 +14,24 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    component: UsersComponent
+    component: UsersComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'details/:id',
-    component: DetailsComponent
+    component: DetailsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'posts',
-    component: PostsComponent
+    component: PostsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'user-details',
-    component: UserDetailsComponent
-  }
+    component: UserDetailsComponent,
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

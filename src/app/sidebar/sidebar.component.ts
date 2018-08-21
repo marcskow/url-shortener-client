@@ -18,6 +18,6 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {}
 
   authenticated() {
-    return this.authService.authenticated;
+    return this.authService.isAuthenticated();
   }
 }

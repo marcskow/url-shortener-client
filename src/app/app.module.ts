@@ -13,6 +13,8 @@ import { DetailsComponent } from './details/details.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { HomeComponent } from './home/home.component';
 import { AuthService } from './auth.service';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -20,7 +22,7 @@ export class XhrInterceptor implements HttpInterceptor {
     const BASE_URL = 'http://localhost:8194/'
     const xhr = req.clone({
       url: BASE_URL + req.url,
-      headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
+      // headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
     });
     return next.handle(xhr);
   }
@@ -43,7 +45,10 @@ export class XhrInterceptor implements HttpInterceptor {
     BrowserAnimationsModule,
     FormsModule,
   ],
-  providers: [AuthService, {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true}],
+  providers: [AuthService, {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

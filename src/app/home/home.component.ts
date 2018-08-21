@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Credentials } from './credentials';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -9,15 +11,41 @@ import { Credentials } from './credentials';
 })
 export class HomeComponent implements OnInit {
 
-  credentials = new Credentials(undefined, undefined)
+  credentials = new Credentials(undefined, undefined);
+  returnUrl: string;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/'
   }
+
+  // login() {
+  //   console.log('Trying to log in with credentials ' + this.credentials.username + ' ' + this.credentials.password)
+  //   this.authService.authenticate(this.credentials, {}).pipe(first())
+  //   .subscribe(
+  //       data => {
+  //           this.router.navigate([this.returnUrl]);
+  //       },
+  //       error => {
+  //           console.error(error);
+  //       });
+  // }
+
 
   login() {
     console.log('Trying to log in with credentials ' + this.credentials.username + ' ' + this.credentials.password)
-    this.authService.authenticate(this.credentials, {})
+    this.authService.login(this.credentials).subscribe(
+        () => {
+          console.log("User is logged in")
+          this.router.navigateByUrl('/user-details');
+        }
+    );
+  }
+
+  authenticated() {
+    return this.authService.isAuthenticated();
   }
 }

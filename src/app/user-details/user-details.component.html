@@ -1,3 +1,11 @@
-<p>
-  user-details works!
-</p>
+<h1>Home</h1>
+<p>You're logged in with Angular 6 & JWT!!</p>
+<div>
+  <ul>
+    <li>
+      <strong>User name:</strong> <div *ngIf="user$">{{ user$.username }}</div>
+      <strong>First name:</strong> <div *ngIf="user$">{{ user$.firstName }}</div>
+      <strong>Last name:</strong> <div *ngIf="user$">{{ user$.lastName }}</div>
+    </li>
+  </ul>
+</div>
