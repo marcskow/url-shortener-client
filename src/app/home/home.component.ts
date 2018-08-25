@@ -11,6 +11,7 @@ import { first } from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
 
+  url = "";
   credentials = new Credentials(undefined, undefined);
   returnUrl: string;
 
@@ -21,19 +22,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/'
   }
-
-  // login() {
-  //   console.log('Trying to log in with credentials ' + this.credentials.username + ' ' + this.credentials.password)
-  //   this.authService.authenticate(this.credentials, {}).pipe(first())
-  //   .subscribe(
-  //       data => {
-  //           this.router.navigate([this.returnUrl]);
-  //       },
-  //       error => {
-  //           console.error(error);
-  //       });
-  // }
-
 
   login() {
     console.log('Trying to log in with credentials ' + this.credentials.username + ' ' + this.credentials.password)

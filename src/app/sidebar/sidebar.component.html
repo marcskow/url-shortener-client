@@ -20,5 +20,12 @@
         <i class="material-icons">face</i>
       </a>
     </li>
+    <li [hidden]="!authenticated()">
+      <div (click)="logout()">
+        <a>
+            <i class="material-icons">exit_to_app</i>
+        </a>
+     </div>
+    </li>
   </ul>
 </nav>

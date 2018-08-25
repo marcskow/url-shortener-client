@@ -13,26 +13,12 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  authenticate(credentials, callback) {
-      const headers = new HttpHeaders(credentials ? {
-        authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
-      } : {});
-
-      return this.http.get('api/user', {headers: headers}).pipe(map(username => {
-        if (username) {
-            this.authenticated = true;
-            localStorage.setItem('username', JSON.stringify(username));
-        }
-
-        return username;
-    }));
-  }
-
   login(credentials) {
     return this.http.post<any>('api/auth/login', credentials).pipe(
       map(user => {
         if(user && user.accessToken) {
           localStorage.setItem('currentUser', JSON.stringify(user));
+          this.authenticated = true
         }
       })
     )
@@ -43,7 +29,8 @@ export class AuthService {
   }
 
   logout() {
-    this.http.post('logout', {}).pipe(finalize(() => {
+    this.http.get('api/auth/logout', {}).pipe(finalize(() => {
+      localStorage.removeItem('currentUser')
       this.authenticated = false;
       this.router.navigateByUrl('');
     })).subscribe();

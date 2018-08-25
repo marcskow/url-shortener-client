@@ -20,4 +20,8 @@ export class SidebarComponent implements OnInit {
   authenticated() {
     return this.authService.isAuthenticated();
   }
+
+  logout() {
+    this.authService.logout();
+  }
 }
